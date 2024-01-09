@@ -16,6 +16,13 @@ const addUser = async (req, res) => {
     }
 };
 
+const login = async (req, res) => {
+try {
+    res.status(201).json({message: "Login succesful", user: req.user})
+} catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+ }
+};
 
 const getUsers = async (req, res) => {
     try {
@@ -36,7 +43,7 @@ const getUsers = async (req, res) => {
             res.status(201).json({message: "user found", user: user})
 
         } catch (error) {
-            res.status(500).json({message: errormessage, error: error });
+            res.status(500).json({message: error.message, error: error });
         }
     };
 
@@ -72,42 +79,6 @@ const getUsers = async (req, res) => {
         }
     };
 
-    const deleteOneByUser = async (req, res) => {
-        try {
-            const pretendUser = {
-                user: "pretend user",
-                isDeleted: true,
-            };
-
-            const deleteUser = await User.destroy({
-                where: {
-                    username: req.body.username,
-                },
-            });
-            
-            res.status(201).json({message: "user deleted", deleteuser: deleteuser})
-
-        } catch (error) {
-            res.status(500).json({ message: error.message, error: error });
-        }
-    };
-
-    const deleteAllUsers = async (req, res) => {
-        try {
-            const users = await User.destroy({
-                truncate: true,
-            });
-
-            res.status(201).json({message: "all books deleted", books: books})
-        } catch (error) {
-            res.status(500).json({ message: error.message, error: error })
-        }
-    };
-
-
-
-
-
 
 
 
@@ -118,6 +89,5 @@ module.exports = {
     getUsers: getUsers,
     getUser: getUser,
     putUser: putUser,
-    // deleteOneByUser: deleteOneByUser,
-    // deleteAllUsers: deleteAllUsers,
+    login: login,
 };
