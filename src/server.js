@@ -6,7 +6,9 @@ const cors = require("cors");
 const port = process.env.PORT || 5001;
 
 const User = require("./user/model");
-const userRouter = require("./user/routes")
+const Book = require("./book/model");
+const userRouter = require("./user/routes");
+const bookRouter = require("./book/routes");
 
 const app = express();
 
@@ -15,9 +17,14 @@ app.use(cors());
 app.use(express.json());
 
 app.use(userRouter);
+app.use(bookRouter);
 
 const syncTables = async () => {
-    await User.sync()
+    await Book.hasOne(User);
+    await User.belongsTo(Book);
+
+    await User.sync({alter:true})
+    await Book.sync()
 }
 
 app.get("/health", (req, res) => {

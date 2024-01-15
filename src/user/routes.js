@@ -1,7 +1,7 @@
 const { Router } = require ("express");
 const userRouter = Router();
 
-const { addUser, login, getUsers, getUser, putUser,} = require ("./controllers");
+const { addUser, login, getUsers, updateFavBook, getUser, putUser,} = require ("./controllers");
 const{ hashPass, comparePass } = require("../middleware/auth");
 
 
@@ -13,6 +13,8 @@ userRouter.get("/users", getUsers);
 
 userRouter.get("/users/:title", getUser);
 
-userRouter.put("/users/update", putUser);
+userRouter.put("/users/updateFavBook", updateFavBook);
+
+userRouter.put("/users/putBook", putUser);
 
 module.exports = userRouter;

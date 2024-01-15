@@ -5,6 +5,7 @@ const User = require("../user/model");
 const saltRounds = parseInt(process.env.SALT);
 
 const hashPass = async (req, res, next) => {
+    console.log("hello from hashpass", req.body)
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
 
@@ -19,7 +20,7 @@ const hashPass = async (req, res, next) => {
 const comparePass = async (req, res, next) => {
     try {
 
-
+        console.log("hello from auth", req.body)
         const user = await User.findOne({
             where: {username: req.body.username},
         })
